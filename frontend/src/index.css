@@ -1,0 +1,111 @@
+@import "tailwindcss";
+
+/* ===== MERCURY-INSPIRED THEME ===== */
+@theme {
+  --color-nexus-dark: #09090b;
+  --color-nexus-bg: #09090b;
+  --color-nexus-card: #18181b;
+  --color-nexus-card-hover: #27272a;
+  --color-nexus-border: rgba(255, 255, 255, 0.08);
+  --color-nexus-border-hover: rgba(255, 255, 255, 0.14);
+  --color-nexus-primary: #3b82f6;
+  --color-nexus-primary-dim: rgba(59, 130, 246, 0.15);
+  --color-nexus-cyan: #06d6a0;
+  --color-nexus-cyan-dim: rgba(6, 214, 160, 0.15);
+  --color-nexus-indigo: #6366f1;
+  --color-nexus-amber: #f59e0b;
+  --color-nexus-red: #ef4444;
+  --color-nexus-green: #10b981;
+  --color-nexus-text: #a1a1aa;
+  --color-nexus-text-header: #fafafa;
+  --color-nexus-text-dim: #71717a;
+  --color-nexus-text-muted: #52525b;
+  --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-display: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* ===== BASE ===== */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--color-nexus-dark);
+  color: var(--color-nexus-text);
+  min-height: 100vh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  letter-spacing: -0.01em;
+}
+
+/* ===== SCROLLBAR ===== */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.08); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.15); }
+
+/* ===== CARD ===== */
+.glass-card {
+  background: var(--color-nexus-card);
+  border: 1px solid var(--color-nexus-border);
+  border-radius: 16px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.glass-card:hover {
+  border-color: var(--color-nexus-border-hover);
+}
+
+/* ===== SUBTLE GLOW — used sparingly ===== */
+.glow-success {
+  box-shadow: 0 0 40px rgba(6, 214, 160, 0.06);
+}
+.text-glow-success {
+  text-shadow: 0 0 30px rgba(6, 214, 160, 0.3);
+}
+
+/* ===== GRADIENT TEXT (used only for hero) ===== */
+.gradient-text {
+  background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 50%, #3b82f6 100%);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 8s ease infinite;
+}
+@keyframes gradientShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* ===== PROGRESS RING ===== */
+.progress-ring-circle {
+  transition: stroke-dashoffset 1s ease-in-out;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+/* ===== TERMINAL ===== */
+.terminal-bg {
+  background: #111113;
+  border: 1px solid var(--color-nexus-border);
+  font-family: var(--font-mono);
+  border-radius: 16px;
+}
+
+/* ===== TAB ===== */
+.tab-active {
+  border-bottom: 2px solid var(--color-nexus-primary);
+  color: white;
+}
+
+/* ===== HIDE SCROLLBAR (for quick actions) ===== */
+.no-scrollbar::-webkit-scrollbar { display: none; }
+.no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ===== SECTION DIVIDER ===== */
+.section-divider {
+  border-top: 1px solid var(--color-nexus-border);
+}
