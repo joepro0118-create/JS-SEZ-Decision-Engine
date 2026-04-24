@@ -4,6 +4,7 @@ import Navbar from './components/Navbar.jsx';
 import AiChatBox from './components/AiChatBox.jsx';
 import HomePage from './pages/HomePage.jsx';
 import ResultsPage from './pages/ResultsPage.jsx';
+import AnalysisPage from './pages/AnalysisPage.jsx';
 import AboutPage from './pages/AboutPage.jsx';
 import ChatPage from './pages/ChatPage.jsx';
 import { useAnalysis } from './context/AnalysisContext.jsx';
@@ -20,6 +21,7 @@ function AppContent() {
       <main>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/analysis" element={<AnalysisPage />} />
           <Route path="/results" element={<ResultsPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/chat" element={<ChatPage />} />
@@ -41,3 +43,4 @@ export default function App() {
     </BrowserRouter>
   );
 }
+

@@ -74,7 +74,7 @@ You MUST respond in the following JSON structure:
       "high_value_jobs": <number>
     }
   },
-  "reasoning_log": "<A detailed multi-paragraph explanation of the trade-offs, covering energy analysis, logistics, zone comparison, carbon tax impact, and why the final recommendation was made. Write this like a strategic advisor's internal memo.>"
+  "reasoning_log": "<A precise, point-form executive conclusion summarizing the trade-offs, energy analysis, logistics, zone comparison, carbon tax impact, and the final recommendation. Use markdown bullet points.>"
 }
 
 IMPORTANT: Return ONLY valid JSON. No markdown, no code fences, no extra text.`;

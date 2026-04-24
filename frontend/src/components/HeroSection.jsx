@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 export default function HeroSection() {
+  const navigate = useNavigate();
   return (
     <section className="relative min-h-[85vh] flex items-center justify-center pt-16">
       <div className="relative z-10 text-center px-6 max-w-3xl mx-auto">
@@ -37,7 +38,7 @@ export default function HeroSection() {
           transition={{ duration: 0.5, delay: 0.25 }}
           className="text-lg text-[#71717a] max-w-xl mx-auto mb-12 leading-relaxed font-normal"
         >
-          AI-powered NIA Scorecard analysis, tax optimization, and strategic zone selection 
+          AI-powered NIA Scorecard analysis, tax optimization, and strategic zone selection
           for companies entering the JS-SEZ.
         </motion.p>
 
@@ -46,20 +47,18 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 15 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
-          className="flex items-center justify-center gap-4"
+          className="flex flex-col items-center justify-center gap-6 mt-8 w-full"
         >
-          <a
-            href="#analysis-section"
-            className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-xl bg-white text-[#09090b] font-semibold text-[15px] hover:bg-[#e4e4e7] transition-colors"
+          <button
+            onClick={() => navigate('/analysis')}
+            className="group relative inline-flex items-center justify-center gap-3 px-12 py-5 rounded-2xl bg-white text-[#09090b] font-bold text-lg hover:scale-105 transition-all duration-300 shadow-[0_0_40px_rgba(255,255,255,0.2)] hover:shadow-[0_0_60px_rgba(255,255,255,0.4)]"
           >
             Start Analysis
-          </a>
-          <Link
-            to="/about"
-            className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-[#a1a1aa] font-medium text-[15px] border border-white/[0.08] hover:border-white/[0.15] hover:text-white transition-all"
-          >
-            Learn More
-          </Link>
+            <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+            </svg>
+          </button>
+
         </motion.div>
 
         {/* Stats */}

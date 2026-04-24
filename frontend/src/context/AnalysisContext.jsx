@@ -1,3 +1,4 @@
+// @refresh reset
 import { createContext, useContext, useState } from 'react';
 import { analyzeCompany } from '../utils/api.js';
 
