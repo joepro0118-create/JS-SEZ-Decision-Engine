@@ -2,6 +2,9 @@
 
 Nexus JS-SEZ Strategic Architect is a conceptual full-stack web application developed for UM Hackathon 2026. The platform aims to serve as an intelligent decision-support and strategic planning tool.
 
+## Live Demo 🔴
+[https://js-sez-decision-engine.vercel.app](https://js-sez-decision-engine.vercel.app)
+
 ## Tech Stack 💻
 
 ### Frontend
