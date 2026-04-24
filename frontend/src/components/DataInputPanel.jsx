@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
-import { Plus, X, ChevronDown, Activity, ShieldCheck, Building2, Users, Wallet, Target, Eye, Cpu, Sparkles } from 'lucide-react';
+import { Plus, X, ChevronDown, Activity, ShieldCheck, Building2, Users, Wallet, Target, Eye, Cpu, Sparkles, ArrowLeftRight } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 export default function DataInputPanel({ onAnalyze, isLoading }) {
   const [activeTab, setActiveTab] = useState('Financials');
+  const [currency, setCurrency] = useState('MYR');
 
   const [formData, setFormData] = useState({
     companyName: 'Apex Semiconductor SG',
@@ -37,9 +38,10 @@ export default function DataInputPanel({ onAnalyze, isLoading }) {
       const financials = {
         company_name: formData.companyName,
         industry: formData.industry,
-        current_revenue_sgd: Number(formData.revenue),
+        currency: currency,
+        current_revenue: Number(formData.revenue),
         r_and_d_spend_pct: `${formData.rdSpend}%`,
-        hr_data: hrRoles.map((r) => ({ role: r.title, salary_myr: Number(r.salary), count: Number(r.count) })),
+        hr_data: hrRoles.map((r) => ({ role: r.title, salary: Number(r.salary), currency: currency, count: Number(r.count) })),
         energy_usage: formData.energyUsage,
       };
       onAnalyze({ financials, strategy: formData.strategy, visionInsights: formData.vision });
@@ -128,8 +130,28 @@ export default function DataInputPanel({ onAnalyze, isLoading }) {
 
                       <SectionCard icon={Wallet} title="Financial & Energy" color="emerald">
                         <div className="space-y-4">
+                          {/* Currency Selector */}
+                          <div className="flex items-center justify-between mb-1">
+                            <label className="dip-label" style={{ marginBottom: 0 }}>Currency</label>
+                            <div className="dip-currency-toggle">
+                              <button
+                                type="button"
+                                onClick={() => setCurrency('MYR')}
+                                className={`dip-currency-btn ${currency === 'MYR' ? 'dip-currency-btn--active' : ''}`}
+                              >
+                                🇲🇾 MYR
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => setCurrency('SGD')}
+                                className={`dip-currency-btn ${currency === 'SGD' ? 'dip-currency-btn--active' : ''}`}
+                              >
+                                🇸🇬 SGD
+                              </button>
+                            </div>
+                          </div>
                           <div className="grid grid-cols-2 gap-4">
-                            <FormInput label="Revenue (SGD)" name="revenue" type="number" value={formData.revenue} onChange={handleInputChange} />
+                            <FormInput label={`Revenue (${currency})`} name="revenue" type="number" value={formData.revenue} onChange={handleInputChange} />
                             <FormInput label="R&D Spend (%)" name="rdSpend" type="number" value={formData.rdSpend} onChange={handleInputChange} />
                           </div>
                           <div className="space-y-2">
@@ -168,7 +190,7 @@ export default function DataInputPanel({ onAnalyze, isLoading }) {
                         <div className="space-y-2 flex-1">
                           <div className="grid grid-cols-[2fr_1fr_1fr_32px] gap-3 px-4 text-[10px] font-bold text-zinc-500 uppercase tracking-widest">
                             <div>Role</div>
-                            <div>Salary (RM)</div>
+                            <div>Salary ({currency === 'MYR' ? 'RM' : 'S$'})</div>
                             <div>Qty</div>
                             <div />
                           </div>

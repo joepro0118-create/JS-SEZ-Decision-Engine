@@ -7,6 +7,8 @@ const client = new OpenAI({
 
 const MODEL = process.env.ILMU_MODEL || "ilmu-glm-5.1";
 
+const SGD_TO_MYR = 3.50;
+
 const JS_SEZ_SYSTEM_PROMPT = `You are NEXUS, an elite AI Investment Strategist specialized in the 2026 Johor-Singapore Special Economic Zone (JS-SEZ).
 
 # CONTEXT & KNOWLEDGE BASE (APRIL 2026)
@@ -22,6 +24,14 @@ const JS_SEZ_SYSTEM_PROMPT = `You are NEXUS, an elite AI Investment Strategist s
    - Tier 1 (5% tax): Total NIA score >= 40/50
    - Tier 2 (10% tax): Total NIA score >= 30/50
    - Tier 3 (15% tax): Total NIA score >= 20/50
+
+# CURRENCY HANDLING
+- The user may provide financial data in either **MYR (Malaysian Ringgit)** or **SGD (Singapore Dollar)**.
+- A "currency" field in the data indicates which currency the user entered.
+- Use the reference exchange rate: **1 SGD = 3.50 MYR**.
+- When the input currency is SGD, you MUST internally convert all monetary values to MYR before evaluating NIA thresholds (e.g. the >RM10k high-value job threshold), calculating tax burdens, and computing impact numbers.
+- ALL output monetary values in the JSON response MUST be in **MYR (RM)**.
+- In your rationale text, mention the original currency and the converted amount for transparency (e.g. "SGD 22,000/month = RM 77,000/month").
 
 You MUST respond in the following JSON structure:
 {
@@ -74,16 +84,33 @@ You MUST respond in the following JSON structure:
       "high_value_jobs": <number>
     }
   },
-  "reasoning_log": "<A precise, point-form executive conclusion summarizing the trade-offs, energy analysis, logistics, zone comparison, carbon tax impact, and the final recommendation. Use markdown bullet points.>"
+  "reasoning_log": "<A precise, point-form executive conclusion summarizing the trade-offs, energy analysis, logistics, zone comparison, carbon tax impact, currency conversions applied, and the final recommendation. Use markdown bullet points.>"
 }
 
 IMPORTANT: Return ONLY valid JSON. No markdown, no code fences, no extra text.`;
 
 async function analyzeCompany(financials, strategy, visionInsights) {
+  // Pre-convert values for the AI's reference if currency is SGD
+  const inputCurrency = financials.currency || 'MYR';
+  let conversionNote = '';
+  if (inputCurrency === 'SGD') {
+    const revenueMYR = Math.round(financials.current_revenue * SGD_TO_MYR);
+    conversionNote = `\n\n## CURRENCY NOTE\nAll monetary values below are in **SGD**. Convert to MYR using 1 SGD = ${SGD_TO_MYR} MYR.\nFor reference: Revenue SGD ${financials.current_revenue.toLocaleString()} = RM ${revenueMYR.toLocaleString()}.`;
+    if (financials.hr_data) {
+      conversionNote += '\nSalary conversions:';
+      financials.hr_data.forEach(r => {
+        conversionNote += `\n- ${r.role}: SGD ${r.salary.toLocaleString()}/mo = RM ${Math.round(r.salary * SGD_TO_MYR).toLocaleString()}/mo`;
+      });
+    }
+  } else {
+    conversionNote = '\n\n## CURRENCY NOTE\nAll monetary values below are in **MYR (RM)**. No conversion needed.';
+  }
+
   const userPrompt = `Analyze this company for JS-SEZ investment:
 
 ## DATA SOURCE 1: STRUCTURED FINANCIALS
 ${JSON.stringify(financials, null, 2)}
+${conversionNote}
 
 ## DATA SOURCE 2: UNSTRUCTURED STRATEGY
 ${strategy}
@@ -91,7 +118,7 @@ ${strategy}
 ## DATA SOURCE 3: VISION INSIGHTS (OPENCV OUTPUT)
 ${visionInsights}
 
-Provide your complete NIA Scorecard audit, strategic recommendation, location optimization, quantifiable impact, and reasoning log.`;
+Provide your complete NIA Scorecard audit, strategic recommendation, location optimization, quantifiable impact (all output values in MYR/RM), and reasoning log.`;
 
   const response = await client.chat.completions.create({
     model: MODEL,
