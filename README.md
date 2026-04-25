@@ -18,7 +18,7 @@ Nexus JS-SEZ Strategic Architect is a conceptual full-stack web application deve
 
 ### Backend
 - **Node.js** with **Express**
-- **@google/generative-ai** (Gemini)
+- **Z.AI API** (ILMU GLM)
 - **OpenAI API**
 - **Axios**
 - **dotenv** & **cors**
@@ -33,7 +33,7 @@ Make sure you have Node.js installed on your machine.
 1. **Clone the repository:**
    ```bash
    git clone <repository-url>
-   cd JS-sez-twinning
+   cd JS-SEZ-Decision-Engine
    ```
 
 2. **Backend Setup:**
@@ -41,7 +41,7 @@ Make sure you have Node.js installed on your machine.
    cd backend
    npm install
    ```
-   Create a `.env` file in the `backend` directory based on required environment variables (e.g., `GEMINI_API_KEY`, etc.).
+   Create a `.env` file in the `backend` directory based on required environment variables (e.g., `ILMU_API_KEY`, etc.).
    
    Start the backend server:
    ```bash
