@@ -5,6 +5,9 @@ Nexus JS-SEZ Strategic Architect is a conceptual full-stack web application deve
 ## Website Link 🔴
 [https://js-sez-decision-engine.vercel.app](https://js-sez-decision-engine.vercel.app)
 
+## Pitching Video 📹
+[UMHackathon Pitching Video](https://drive.google.com/file/d/12HUgK4oWOl3nGykFrTl8GZtdsj-ETWyq/view?usp=sharing)
+
 ## Tech Stack 💻
 
 ### Frontend
