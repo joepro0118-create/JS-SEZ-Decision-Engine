@@ -3,12 +3,13 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
+  base: './', // 👈 就是加了这一行！解决白屏的终极武器
   plugins: [
     react(),
     tailwindcss(),
   ],
   server: {
-    host: true, // Exposes the server to the local network
+    host: true,
     port: 5173,
     proxy: {
       '/api': {
