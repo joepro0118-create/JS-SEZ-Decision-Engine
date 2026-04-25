@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
-const { analyzeCompany, chat } = require("./services/geminiService");
+const { analyzeCompany, chat } = require("./services/zaiService");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
